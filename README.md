@@ -9,3 +9,5 @@ Role Types:
 
 REST API
 - POST /newdocument
+- GET /document/{uniqueID}
+- GET /collection/{tags list}
