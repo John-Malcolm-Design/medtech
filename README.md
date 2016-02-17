@@ -9,18 +9,18 @@ The Product Development Benchmark Model has been developed by the IMDA IRDG Work
 - Contributor: document upload 1. Apache POI plugin
 - Benchmark: User doing the benchark 2. Cause yano
 
-## Contributor Endpoints
+### Contributor Endpoints
 - POST http:/medtech.ie/api/articles/ | Article upload.
 - GET http:/medtech.ie/api/articles/[id] | Get a single instance of an article.
 
-## Benchmark Endpoints
+### Benchmark Endpoints
 - POST http:/medtech.ie/api/articles/reccommend | Post the score and the section. Returns array of articles. 
 
-## Moderator Endpoints
+### Moderator Endpoints
 - GET http:/medtech.ie/api/articles/ | Collection of all articles.
 
-## Administrator Endpoints
+### Administrator Endpoints
 We getting dem all bitches
 
-## Questions
+### Questions
 - Can we intelligemtly skip higher sections based on progressive score. 
