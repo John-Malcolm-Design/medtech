@@ -14,7 +14,7 @@ The Product Development Benchmark Model has been developed by the IMDA IRDG Work
 - GET http:/medtech.ie/api/articles/[id] | Get a single instance of an article.
 
 ### Benchmark Endpoints
-- POST http:/medtech.ie/api/articles/reccommend | Post the score and the section. Returns array of articles. 
+- POST http:/medtech.ie/api/articles/recommend | Post the score and the section. Returns array of articles. 
 
 ### Moderator Endpoints
 - GET http:/medtech.ie/api/articles/ | Collection of all articles.
@@ -23,4 +23,5 @@ The Product Development Benchmark Model has been developed by the IMDA IRDG Work
 We getting dem all bitches
 
 ### Questions
-- Can we intelligemtly skip higher sections based on progressive score. 
+- Can we intelligently skip higher (e.g: entry < performing) sections based on progressive score?
+- Is there a tag domain, e.g - 50 or 100 set tags or will moderators be able to create new tags on the fly?
