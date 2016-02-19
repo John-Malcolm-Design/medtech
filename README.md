@@ -23,5 +23,18 @@ The Product Development Benchmark Model has been developed by the IMDA IRDG Work
 We getting dem all bitches
 
 ### Questions
-- Can we intelligently skip higher (e.g: entry < performing) sections based on progressive score?
-- Is there a tag domain, e.g - 50 or 100 set tags or will moderators be able to create new tags on the fly?
+- What are the expected document types for the articles: list plz
+- What is the name of the website?
+
+### Design Brainmap
+- Homepage: 
+  - login
+  - blulb
+  - search
+  - new articles
+  - best articles
+  - catagories
+  - footer 
+
+### Ideas for next year
+- Web page generation that contains the articles (user retention).
