@@ -3,11 +3,11 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>simple-heroku-webapp</artifactId>
+    <groupId>com.medtech</groupId>
+    <artifactId>medtech-api</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>simple-heroku-webapp</name>
+    <name>medtech-api</name>
 
     <dependencyManagement>
         <dependencies>
@@ -26,11 +26,10 @@
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet</artifactId>
         </dependency>
-        <!-- uncomment this to get JSON support
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-moxy</artifactId>
-        </dependency> -->
+        </dependency>
 
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
@@ -54,7 +53,7 @@
     </dependencies>
 
     <build>
-        <finalName>simple-heroku-webapp</finalName>
+        <finalName>medtech-api</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
