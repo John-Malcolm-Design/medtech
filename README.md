@@ -39,3 +39,4 @@ We getting dem all bitches
 ### Ideas for next year
 - Web page generation that contains the articles (user retention on medtech.ie).
 - Are we recommending on a purely QA basis or also on a field basis. (e.g, alzheimers, neurosurgory) 
+- Can we have some docs to work off plz?
