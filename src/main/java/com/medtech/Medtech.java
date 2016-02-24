@@ -4,6 +4,7 @@ import javax.ws.rs.ApplicationPath;
 
 import org.glassfish.jersey.server.ResourceConfig;
 
+import com.medtech.database.Database;
 import com.medtech.resource.ArticleResource;
 
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
@@ -11,6 +12,6 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 @ApplicationPath("/")
 public class Medtech extends ResourceConfig {
 	public Medtech() {
-		super(MultiPartFeature.class, ArticleResource.class);
+		super(MultiPartFeature.class, ArticleResource.class, Database.class);
 	}
 }
