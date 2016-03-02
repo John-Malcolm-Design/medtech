@@ -2,18 +2,18 @@ package com.medtech.model;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.poi.util.IOUtils;
 
 public class Article {
 	
-	private long id;//probably needs to change data type according to mongo
+	private String id;//probably needs to change data type according to mongo
 	private String fileName;
 	private byte[] data = null;
 	private Map<String, Integer> wordMap;
-	private List<String> labels;
+	private Set<String> labels;
 	//private created;
 	
 	public Article()
@@ -45,11 +45,11 @@ public class Article {
 		this.wordMap = wordMap;
 	}
 
-	public List<String> getLabels() {
-		return labels;
+	public void addLabel(String s) {
+		labels.add(s);
 	}
-
-	public void setLabels(List<String> labels) {
+	//Drop whichever we dont end up using, set or add... pick one.
+	public void setLabels(Set<String> labels) {
 		this.labels = labels;
 	}
 	
@@ -65,11 +65,11 @@ public class Article {
 		this.fileName = fileName;
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 }

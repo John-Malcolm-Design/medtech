@@ -1,6 +1,7 @@
 package com.medtech.resource;
 
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +23,6 @@ import com.medtech.model.Article;
 
 @Path("/articles")
 @Produces(MediaType.APPLICATION_JSON)
-
 public class ArticleResource {
 	@GET
 	public String getArticles() {
@@ -53,6 +53,12 @@ public class ArticleResource {
 		Document doc = new Document(docMap);
 		Database dbConnections = new Database();
 		dbConnections.mongoUpload(doc);
+		try {
+			dbConnections.neoUpload(newArticle, "StandardProcesses", "Performing");
+		} catch (SQLException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return "Booya!";
 	}
