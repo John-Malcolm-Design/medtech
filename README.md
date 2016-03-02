@@ -1,4 +1,4 @@
-# MEDTech
+# MEDTech [![Build Status](https://travis-ci.com/johnmalcolm/medtech.svg?token=qM1R4xpKEnps8JFk5BZp&branch=master)](https://travis-ci.com/johnmalcolm/medtech)
 
 ## Overview
 The Product Development Benchmark Model has been developed by the IMDA IRDG Working Group as an assessment tool to allow organisations to benchmark themselves against best practice models in Medtech product development. 
@@ -10,8 +10,25 @@ The Product Development Benchmark Model has been developed by the IMDA IRDG Work
 - Benchmark: User doing the benchark 2. Cause yano
 
 ### Contributor Endpoints
-- POST http:/medtech.ie/api/articles/ | Article upload.
-- GET http:/medtech.ie/api/articles/[id] | Get a single instance of an article.
+POST  | Article upload.
+**POST:** *http:/medtech.ie/api/articles/*.
+
+**HTTP Request Example**
+```http
+HTTP/1.1 200 OK
+[
+  {
+    "fileName": "stuff.pdf",
+    "labels": ["Buzzword!", "Research!", "SCIENCE"],
+    "tags": ["What","is","love","baby","dont","hurt","me","no","more" ],
+    "extension": ".pdf",
+    "data": [],
+    [...]
+  },
+  [...]
+]
+```
+GET http:/medtech.ie/api/articles/[id] | Get a single instance of an article.
 
 ### Benchmark Endpoints
 - POST http:/medtech.ie/api/articles/recommend | Post the score and the section. Returns array of articles. 
