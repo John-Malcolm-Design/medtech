@@ -6,14 +6,16 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.poi.util.IOUtils;
+import org.bson.types.ObjectId;
 
 public class Article {
 	
-	private String id;//probably needs to change data type according to mongo
+	private ObjectId id;//probably needs to change data type according to mongo
 	private String fileName;
 	private byte[] data = null;
 	private Map<String, Integer> wordMap;
 	private Set<String> labels;
+
 	//private created;
 	
 	public Article()
@@ -63,13 +65,20 @@ public class Article {
 			e.printStackTrace();
 		}
 		this.fileName = fileName;
+		this.id = new ObjectId();
+	}
+	
+	public Article(byte[] data, String fileName)
+	{
+		this.data = data;
+		this.fileName = fileName;
 	}
 
-	public String getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 }

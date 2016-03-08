@@ -1,7 +1,13 @@
 package com.medtech.resource;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.StringWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,10 +16,17 @@ import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -30,11 +43,20 @@ public class ArticleResource {
 		return "This is a list. Good job!";
 	}
 
-	@Path("{articleId}")
-	@GET
-	public String getArticle() {
-		// get all articles from article service
-		return "This is a list. Good job!";
+	@GET 
+	@Path("{id}")
+	@Produces(MediaType.APPLICATION_OCTET_STREAM)
+	public Response getArticleById(@PathParam("id") String articleId) throws JsonGenerationException, JsonMappingException, IOException {
+		// get an article from article service
+		
+		Database db = new Database();
+		System.out.println(articleId);
+		Article article =  db.mongoFindById(new ObjectId(articleId));
+	    System.out.println(article.getFileName());
+		ResponseBuilder response = Response.ok((Object) article.getData());
+		
+	    response.header("Content-Disposition", "attachment; filename="+article.getFileName());
+	    return response.build();
 	}
 
 	@POST
@@ -49,6 +71,7 @@ public class ArticleResource {
 		Map<String, Object> docMap = new HashMap<String, Object>();
 		docMap.put("Name", newArticle.getFileName());
 		docMap.put("Data", newArticle.getData());
+		docMap.put("_id", newArticle.getId());
 		// docMap.put("WordMap", newArticle.getWordMap());
 		Document doc = new Document(docMap);
 		Database dbConnections = new Database();
