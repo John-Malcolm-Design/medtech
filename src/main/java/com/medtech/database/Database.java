@@ -2,7 +2,11 @@ package com.medtech.database;
 
 import java.sql.*;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
 import org.neo4j.jdbc.*;
 import org.bson.Document;
 import org.bson.types.Binary;
@@ -75,23 +79,45 @@ public class Database {
 		// Connect
 		Connection con = DriverManager.getConnection(neoConString,neoUser,neoPW);
 		// Querying
-		try(Statement stmt = con.createStatement())
-		{
-		    stmt.executeQuery(query);
-		}	
+		Statement stmt = con.createStatement();
+		stmt.executeQuery(query);
+		
 	}
 	
 	//This map will need to be parsed over to JSON
-	public ResultSet getRelevantArticles(String element, String heading) throws SQLException
+	
+	public ResultSet getRelevantArticles(Map<String, String> headings) throws SQLException
 	{
-		String query = "Match (E:"+element+"-[SUBHEADING]->(H:"+heading+")-[RELEVANT]->(A)"
-				+ "Return A;";
+		Iterator<Entry<String, String>> it = headings.entrySet().iterator();
+		StringBuilder sbRows = new StringBuilder();
+		StringBuilder sbCols = new StringBuilder();
+		
+		while(it.hasNext())
+		{
+			Map.Entry<String, String> pair = (Map.Entry<String, String>)it.next();
+			
+			if(it.hasNext())
+			{
+				sbRows.append("\"" +pair.getKey() +"\",");
+				sbCols.append("\"" +pair.getValue() +"\",");
+			}
+			else
+			{
+				sbRows.append("\"" +pair.getKey() +"\"");
+				sbCols.append("\"" +pair.getValue() +"\"");
+			}
+		}
+		
+		//Test this query with a full neoDB
+		String query = "MATCH (R :Row)-[:SubElement]-(C :Column)-[:Relevant]->(A :Article) "
+				+ "WHERE R.name IN[" + sbRows.toString() +"] "
+						+ "AND C.name IN [" +sbCols.toString() +"] Return (A);" ;
+		
 		// Connect
 		Connection con = DriverManager.getConnection(neoConString,neoUser,neoPW);
 		// Querying
-		try(Statement stmt = con.createStatement())
-		{
-		    return stmt.executeQuery(query);
-		} 
+		Statement stmt = con.createStatement();
+		return stmt.executeQuery(query);
+		
 	}
 }
