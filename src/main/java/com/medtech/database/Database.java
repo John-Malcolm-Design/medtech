@@ -69,7 +69,7 @@ public class Database {
 		
 		//This is legacy stuff, shouldn't be necessary but if it is,
 		//this is throwing a class not found exception... Y U DO DIS JAVAAA
-		//Class.forName("org.neo4j.jdbc.Driver");
+		Class.forName("org.neo4j.jdbc.Driver");
 		
 		// Connect
 		Connection con = DriverManager.getConnection("jdbc:neo4j://localhost:7474/");
