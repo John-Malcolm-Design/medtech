@@ -76,8 +76,8 @@ public class ArticleResource {
 		Document doc = new Document(docMap);
 		Database dbConnections = new Database();
 		dbConnections.mongoUpload(doc);
-		try {
-			dbConnections.neoUpload(newArticle, "StandardProcesses", "Performing");
+		try {										//replace these test values with values retrieved from MP/FD payload
+			dbConnections.neoUpload(newArticle, "Standard Processes", "Performing");
 		} catch (SQLException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

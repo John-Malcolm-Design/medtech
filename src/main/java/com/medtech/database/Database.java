@@ -28,19 +28,23 @@ public class Database {
 	private final String mongoURL = "mongodb://BillyBob:1234qwer@ds029615.mongolab.com:29615/heroku_jddvvzdm";
 	private final String mongoDB = "heroku_jddvvzdm";
 	private final String mongoCollection = "files";
-	private final String neoUser = "neo4j";
-	private final String neoPW = "1234qwer";
-	private final String neoConString = "jdbc:neo4j://localhost:7474/";
 	
-	//This is the url for the heroku Graphene server
-	//private final String neoConString = "jdbc:neo4j:http://app46842636-cwN6qG:6RYFAurdumaXb0gPajrt@app46842636cwn6qg.sb02.stations.graphenedb.com:24789";
+	//User and password for the graphstory connection
+	private final String neoUser = "neo_heroku_jaida_reinger_darkred";
+	private final String neoPW = "JzgKfQ4NM8vGbuPljyDeFnnohoIOMUKwi5wgzUsn";
+	
+	//private final String neoConString = "jdbc:neo4j://localhost:7474/";
+	
+	//Graphene
+	
+	//This is the url for the heroku GraphStory server
+	private final String neoConString = "jdbc:neo4j:https://neo-heroku-jaida-reinger-darkred.digital-ocean.graphstory.com";
 	
 	public Database()
 	{
 		
 	}
-	//change return statement when neo gets plugged in
-	//should return some identifier from mongo to store in the graphDB
+	
 	public void mongoUpload(Document doc){
 		MongoClientURI uri  = new MongoClientURI(mongoURL); 
 		MongoClient client = new MongoClient(uri);
@@ -71,13 +75,12 @@ public class Database {
 	public void neoUpload(Article a, String element, String heading) throws SQLException, ClassNotFoundException
 	{
 		String query = 
-				"Match (E:"+element+")-[SubElement]->(H:"+heading+")"
-				+"Create (A:Article{name:\"" +a.getFileName()+"\","
-						+"mongoId:\"" +a.getId() +"\"}),"
-				        +"H-[:RELEVANT]->A";
+				"Match (E {name:\"" +element +"\"})-[SubElement]->(H{name:\""+heading+"\"})" 
+				+"Create (A:Article{name:\""+a.getFileName()+"\", mongoId: \""+a.getId()+"\"}), "
+				        +"H-[:RELEVANT]->A;";
 		
 		// Connect
-		Connection con = DriverManager.getConnection(neoConString,neoUser,neoPW);
+		Connection con = DriverManager.getConnection("jdbc:neo4j:https://neo-heroku-jaida-reinger-darkred.digital-ocean.graphstory.com:7473/", neoUser, neoPW);
 		// Querying
 		Statement stmt = con.createStatement();
 		stmt.executeQuery(query);
@@ -114,7 +117,7 @@ public class Database {
 						+ "AND C.name IN [" +sbCols.toString() +"] Return (A);" ;
 		
 		// Connect
-		Connection con = DriverManager.getConnection(neoConString,neoUser,neoPW);
+		Connection con = DriverManager.getConnection(neoConString, neoUser, neoPW);
 		// Querying
 		Statement stmt = con.createStatement();
 		return stmt.executeQuery(query);
