@@ -39,7 +39,7 @@ import com.medtech.model.Article;
 public class ArticleResource {
 	@GET
 	public String getArticles() {
-		// get all articles from article service
+		//get all the relevant articles in a json list from neo4j
 		return "This is a list. Good job!";
 	}
 
@@ -63,7 +63,9 @@ public class ArticleResource {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public String postArticle(@DefaultValue("true") @FormDataParam("enabled") boolean enabled,
 			@FormDataParam("uploadedfile") InputStream fileInputStream,
-			@FormDataParam("uploadedfile") FormDataContentDisposition fileDisposition) {
+			@FormDataParam("uploadedfile") FormDataContentDisposition fileDisposition,
+			@FormDataParam("uploadedfile") String heading,
+			@FormDataParam("uploadedfile") String subHeading) {
 		
 		Article newArticle = new Article(fileInputStream, fileDisposition.getFileName());
 		
@@ -77,7 +79,7 @@ public class ArticleResource {
 		Database dbConnections = new Database();
 		dbConnections.mongoUpload(doc);
 		try {										//replace these test values with values retrieved from MP/FD payload
-			dbConnections.neoUpload(newArticle, "Standard Processes", "Performing");
+			dbConnections.neoUpload(newArticle, heading, subHeading);
 		} catch (SQLException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
