@@ -27,7 +27,8 @@ public class Database {
 	
 	private final String mongoURL = "mongodb://BillyBob:1234qwer@ds029615.mongolab.com:29615/heroku_jddvvzdm";
 	private final String mongoDB = "heroku_jddvvzdm";
-	private final String mongoCollection = "files";
+	private final String filesCollection = "files";
+	private final String benchmarkCollection = "benchmark";
 	
 	//User and password for the graphstory connection
 	private final String neoUser = "neo_heroku_jaida_reinger_darkred";
@@ -45,11 +46,19 @@ public class Database {
 		
 	}
 	
+	public void getBenchmark(){
+		MongoClientURI uri  = new MongoClientURI(mongoURL); 
+		MongoClient client = new MongoClient(uri);
+		MongoDatabase db = client.getDatabase(mongoDB);
+		MongoCollection<Document> benchmark = db.getCollection(benchmarkCollection);
+		System.out.println(benchmark);
+	}
+	
 	public void mongoUpload(Document doc){
 		MongoClientURI uri  = new MongoClientURI(mongoURL); 
 		MongoClient client = new MongoClient(uri);
 		MongoDatabase db = client.getDatabase(mongoDB);
-		MongoCollection<Document> files = db.getCollection(mongoCollection);
+		MongoCollection<Document> files = db.getCollection(filesCollection);
 		files.insertOne(doc);
 		client.close();
 	}
@@ -61,7 +70,7 @@ public class Database {
 		MongoClientURI uri  = new MongoClientURI(mongoURL); 
 		MongoClient client = new MongoClient(uri);
 		MongoDatabase db = client.getDatabase(mongoDB);
-		MongoCollection<Document> files = db.getCollection(mongoCollection);
+		MongoCollection<Document> files = db.getCollection(filesCollection);
 		match = files.find(new Document("_id", id)).first();
 		client.close();
 		Binary data = (Binary) match.get("Data");
@@ -123,4 +132,5 @@ public class Database {
 		return stmt.executeQuery(query);
 		
 	}
+	
 }
