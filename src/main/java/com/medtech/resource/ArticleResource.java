@@ -32,6 +32,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.medtech.database.Database;
 import com.medtech.model.Article;
+import com.medtech.model.LabelBean;
 
 
 @Path("/articles")
@@ -42,7 +43,24 @@ public class ArticleResource {
 		// get all articles from article service
 		return "This is a list. Good job!";
 	}
-
+	
+	@POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+	@Path("/recommend")
+	public String getRecommendations(LabelBean bean)
+	{
+		Database db = new Database();
+		String response = null;
+		try {
+			response = db.getRelevantArticles(bean.getHeading(), bean.getSubHeading());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return response;
+	}
+	
 	@GET 
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
@@ -63,7 +81,9 @@ public class ArticleResource {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public String postArticle(@DefaultValue("true") @FormDataParam("enabled") boolean enabled,
 			@FormDataParam("uploadedfile") InputStream fileInputStream,
-			@FormDataParam("uploadedfile") FormDataContentDisposition fileDisposition) {
+			@FormDataParam("uploadedfile") FormDataContentDisposition fileDisposition,
+			@FormDataParam("uploadedfile") String heading,
+			@FormDataParam("uploadedfile") String subHeading) {
 		
 		Article newArticle = new Article(fileInputStream, fileDisposition.getFileName());
 		
@@ -77,7 +97,7 @@ public class ArticleResource {
 		Database dbConnections = new Database();
 		dbConnections.mongoUpload(doc);
 		try {										//replace these test values with values retrieved from MP/FD payload
-			dbConnections.neoUpload(newArticle, "Standard Processes", "Performing");
+			dbConnections.neoUpload(newArticle, heading, subHeading);
 		} catch (SQLException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -3,11 +3,15 @@ package com.medtech.database;
 import java.sql.*;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import org.neo4j.jdbc.*;
+import org.apache.commons.dbutils.DbUtils;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.bson.Document;
 import org.bson.types.Binary;
 import org.bson.types.ObjectId;
@@ -15,6 +19,7 @@ import org.bson.types.ObjectId;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Filters.*;
 import com.mongodb.client.model.FindOptions;
+import com.google.gson.Gson;
 import com.medtech.model.Article;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -39,7 +44,7 @@ public class Database {
 	//Graphene
 	
 	//This is the url for the heroku GraphStory server
-	private final String neoConString = "jdbc:neo4j:https://neo-heroku-jaida-reinger-darkred.digital-ocean.graphstory.com";
+	private final String neoConString = "jdbc:neo4j:https://neo-heroku-jaida-reinger-darkred.digital-ocean.graphstory.com:7473/";
 	
 	public Database()
 	{
@@ -89,7 +94,7 @@ public class Database {
 				        +"H-[:RELEVANT]->A;";
 		
 		// Connect
-		Connection con = DriverManager.getConnection("jdbc:neo4j:https://neo-heroku-jaida-reinger-darkred.digital-ocean.graphstory.com:7473/", neoUser, neoPW);
+		Connection con = DriverManager.getConnection(neoConString, neoUser, neoPW);
 		// Querying
 		Statement stmt = con.createStatement();
 		stmt.executeQuery(query);
@@ -97,40 +102,68 @@ public class Database {
 	}
 	
 	//This map will need to be parsed over to JSON
-	
-	public ResultSet getRelevantArticles(Map<String, String> headings) throws SQLException
-	{
-		Iterator<Entry<String, String>> it = headings.entrySet().iterator();
-		StringBuilder sbRows = new StringBuilder();
-		StringBuilder sbCols = new StringBuilder();
-		
-		while(it.hasNext())
-		{
-			Map.Entry<String, String> pair = (Map.Entry<String, String>)it.next();
-			
-			if(it.hasNext())
-			{
-				sbRows.append("\"" +pair.getKey() +"\",");
-				sbCols.append("\"" +pair.getValue() +"\",");
-			}
-			else
-			{
-				sbRows.append("\"" +pair.getKey() +"\"");
-				sbCols.append("\"" +pair.getValue() +"\"");
-			}
-		}
+	public String getRelevantArticles(String heading, String subHeading) throws SQLException
+	{		
 		
 		//Test this query with a full neoDB
-		String query = "MATCH (R :Row)-[:SubElement]-(C :Column)-[:Relevant]->(A :Article) "
-				+ "WHERE R.name IN[" + sbRows.toString() +"] "
-						+ "AND C.name IN [" +sbCols.toString() +"] Return (A);" ;
+		String query = "MATCH (H {name:\""+heading+"\")-[:SubElement]-(S {name:\""+subHeading+"\")-[:Relevant]->(A :Article) return A; ";
 		
 		// Connect
 		Connection con = DriverManager.getConnection(neoConString, neoUser, neoPW);
 		// Querying
 		Statement stmt = con.createStatement();
-		return stmt.executeQuery(query);
+		
+		return resultSetToJson(con, query);
 		
 	}
 	
+<<<<<<< HEAD
+=======
+	public static String resultSetToJson(Connection connection, String query) {
+        List<Map<String, Object>> listOfMaps = null;
+        try {
+            QueryRunner queryRunner = new QueryRunner();
+            listOfMaps = queryRunner.query(connection, query, new MapListHandler());
+        } catch (SQLException se) {
+            throw new RuntimeException("Couldn't query the database.", se);
+        } finally {
+            DbUtils.closeQuietly(connection);
+        }
+        return new Gson().toJson(listOfMaps);
+    }
+//	public ResultSet getRelevantArticles(Map<String, String> headings) throws SQLException
+//	{
+//		Iterator<Entry<String, String>> it = headings.entrySet().iterator();
+//		StringBuilder sbRows = new StringBuilder();
+//		StringBuilder sbCols = new StringBuilder();
+//		
+//		while(it.hasNext())
+//		{
+//			Map.Entry<String, String> pair = (Map.Entry<String, String>)it.next();
+//			
+//			if(it.hasNext())
+//			{
+//				sbRows.append("\"" +pair.getKey() +"\",");
+//				sbCols.append("\"" +pair.getValue() +"\",");
+//			}
+//			else
+//			{
+//				sbRows.append("\"" +pair.getKey() +"\"");
+//				sbCols.append("\"" +pair.getValue() +"\"");
+//			}
+//		}
+//		
+//		//Test this query with a full neoDB
+//		String query = "MATCH (R :Row)-[:SubElement]-(C :Column)-[:Relevant]->(A :Article) "
+//				+ "WHERE R.name IN[" + sbRows.toString() +"] "
+//						+ "AND C.name IN [" +sbCols.toString() +"] Return (A);" ;
+//		
+//		// Connect
+//		Connection con = DriverManager.getConnection(neoConString, neoUser, neoPW);
+//		// Querying
+//		Statement stmt = con.createStatement();
+//		return stmt.executeQuery(query);
+//		
+//	}
+>>>>>>> a9fd1f9a1608adf7c762bc4b9d13f8743fba4e02
 }
