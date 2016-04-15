@@ -116,9 +116,7 @@ public class Database {
 		return resultSetToJson(con, query);
 		
 	}
-	
-<<<<<<< HEAD
-=======
+
 	public static String resultSetToJson(Connection connection, String query) {
         List<Map<String, Object>> listOfMaps = null;
         try {
@@ -131,39 +129,39 @@ public class Database {
         }
         return new Gson().toJson(listOfMaps);
     }
-//	public ResultSet getRelevantArticles(Map<String, String> headings) throws SQLException
-//	{
-//		Iterator<Entry<String, String>> it = headings.entrySet().iterator();
-//		StringBuilder sbRows = new StringBuilder();
-//		StringBuilder sbCols = new StringBuilder();
-//		
-//		while(it.hasNext())
-//		{
-//			Map.Entry<String, String> pair = (Map.Entry<String, String>)it.next();
-//			
-//			if(it.hasNext())
-//			{
-//				sbRows.append("\"" +pair.getKey() +"\",");
-//				sbCols.append("\"" +pair.getValue() +"\",");
-//			}
-//			else
-//			{
-//				sbRows.append("\"" +pair.getKey() +"\"");
-//				sbCols.append("\"" +pair.getValue() +"\"");
-//			}
-//		}
-//		
-//		//Test this query with a full neoDB
-//		String query = "MATCH (R :Row)-[:SubElement]-(C :Column)-[:Relevant]->(A :Article) "
-//				+ "WHERE R.name IN[" + sbRows.toString() +"] "
-//						+ "AND C.name IN [" +sbCols.toString() +"] Return (A);" ;
-//		
-//		// Connect
-//		Connection con = DriverManager.getConnection(neoConString, neoUser, neoPW);
-//		// Querying
-//		Statement stmt = con.createStatement();
-//		return stmt.executeQuery(query);
-//		
-//	}
->>>>>>> a9fd1f9a1608adf7c762bc4b9d13f8743fba4e02
+	
+	public ResultSet getRelevantArticles(Map<String, String> headings) throws SQLException
+	{
+		Iterator<Entry<String, String>> it = headings.entrySet().iterator();
+		StringBuilder sbRows = new StringBuilder();
+		StringBuilder sbCols = new StringBuilder();
+		
+		while(it.hasNext())
+		{
+			Map.Entry<String, String> pair = (Map.Entry<String, String>)it.next();
+			
+			if(it.hasNext())
+			{
+				sbRows.append("\"" +pair.getKey() +"\",");
+				sbCols.append("\"" +pair.getValue() +"\",");
+			}
+			else
+			{
+				sbRows.append("\"" +pair.getKey() +"\"");
+				sbCols.append("\"" +pair.getValue() +"\"");
+			}
+		}
+		
+		//Test this query with a full neoDB
+		String query = "MATCH (R :Row)-[:SubElement]-(C :Column)-[:Relevant]->(A :Article) "
+				+ "WHERE R.name IN[" + sbRows.toString() +"] "
+						+ "AND C.name IN [" +sbCols.toString() +"] Return (A);" ;
+		
+		// Connect
+		Connection con = DriverManager.getConnection(neoConString, neoUser, neoPW);
+		// Querying
+		Statement stmt = con.createStatement();
+		return stmt.executeQuery(query);
+		
+	}
 }
