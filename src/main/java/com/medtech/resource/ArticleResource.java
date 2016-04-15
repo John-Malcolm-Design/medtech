@@ -32,6 +32,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.medtech.database.Database;
 import com.medtech.model.Article;
+import com.medtech.model.LabelBean;
 
 
 @Path("/articles")
@@ -39,10 +40,27 @@ import com.medtech.model.Article;
 public class ArticleResource {
 	@GET
 	public String getArticles() {
-		//get all the relevant articles in a json list from neo4j
+		// get all articles from article service
 		return "This is a list. Good job!";
 	}
-
+	
+	@POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+	@Path("/recommend")
+	public String getRecommendations(LabelBean bean)
+	{
+		Database db = new Database();
+		String response = null;
+		try {
+			response = db.getRelevantArticles(bean.getHeading(), bean.getSubHeading());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return response;
+	}
+	
 	@GET 
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
