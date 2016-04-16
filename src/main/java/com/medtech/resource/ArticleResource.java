@@ -76,7 +76,7 @@ public class ArticleResource {
 	public String postArticle(@DefaultValue("true") @FormDataParam("enabled") boolean enabled,
 			@FormDataParam("uploadedfile") InputStream fileInputStream,
 			@FormDataParam("uploadedfile") FormDataContentDisposition fileDisposition,
-			@FormDataParam("uploadedfile") String heading, @FormDataParam("uploadedfile") String subHeading) {
+			@FormDataParam("row") String heading, @FormDataParam("col") String subHeading) {
 
 		Article newArticle = new Article(fileInputStream, fileDisposition.getFileName());
 

@@ -81,10 +81,9 @@ public class Database {
 	// Need to provide a solution later to handle the whole set of labels
 	// Just trying to get stuff up and running for now
 	public void neoUpload(Article a, String element, String heading) throws SQLException, ClassNotFoundException {
-		String query = "Match (E {name:\"" + element + "\"})-[SubElement]->(H{name:\"" + heading + "\"})"
-				+ "Create (A:Article{name:\"" + a.getFileName() + "\", mongoId: \"" + a.getId() + "\"}), "
-				+ "H-[:RELEVANT]->A;";
-
+		String query = "Match (E {name:\""+element+"\"})-[SubElement]->(H{name:\""+heading
+				+"\"}) Create (A:Article{name:\""+a.getFileName()+"\", mongoId: \""+a.getId()+"\"}), H-[:RELEVANT]->A;";
+		System.out.println(query);
 		// Connect
 		Connection con = DriverManager.getConnection(neoConString, neoUser, neoPW);
 		// Querying
