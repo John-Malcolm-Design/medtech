@@ -113,14 +113,16 @@ public class Database {
 	//takes a result set, loops through it and creates JSON objects, then puts them in a JSON array, returns the .toString();
 	public static String resultSetToJson(ResultSet rs) throws SQLException {
 		JSONArray set = new JSONArray();
-		JSONObject obj = new JSONObject();
+		
 		ResultSetMetaData rsmd = rs.getMetaData();
 		
 		while (rs.next()) {			
 			int numColumns = rsmd.getColumnCount();		
 			for (int i = 1; i < numColumns + 1; i++) {
+				JSONObject obj = new JSONObject();
 				String column_name = rsmd.getColumnName(i);
 				obj.put(column_name, rs.getObject(column_name));
+				System.out.println(obj);
 				set.put(obj);
 			}
 		}
