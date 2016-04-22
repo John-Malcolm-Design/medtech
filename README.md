@@ -3,57 +3,79 @@
 ## Overview
 The Product Development Benchmark Model has been developed by the IMDA IRDG Working Group as an assessment tool to allow organisations to benchmark themselves against best practice models in Medtech product development. 
 
-## Role Types
-- Moderator: document mgmt 3. Nye
-- Administrator: user mgmt 4. Fuck this noise
-- Contributor: document upload 1. Apache POI plugin
-- Benchmark: User doing the benchark 2. Cause yano
+##Potential Role Types
+###Each role inherits the privileges of the roles above it.
+- Benchmark: User doing the benchark.
+- Contributor: Uploads documents to the repository.
+- Moderator: Manages document submissions.
+- Administrator: Manages users.
+
+#Currently Implemented Endpoints
 
 ### Contributor Endpoints
-POST  | Article upload.
-**POST:** *http:/medtech.ie/api/articles/*.
+####POST  | Article upload.
+**POST:** *http://medtech-api.herokuapp.com/articles/*.
 
-**HTTP Request Example**
+**HTTP POST Request Example**
 ```http
-HTTP/1.1 200 OK
 [
   {
-    "fileName": "stuff.pdf",
-    "labels": ["Buzzword!", "Research!", "SCIENCE"],
-    "tags": ["What","is","love","baby","dont","hurt","me","no","more" ],
-    "extension": ".pdf",
-    "data": [],
-    [...]
-  },
-  [...]
+    "fileName" : "stuff.pdf",
+    "heading" : "Strategic Focus",
+    "subHeading" : "Entry",
+    "data": []
+  }
 ]
 ```
-GET http:/medtech.ie/api/articles/[id] | Get a single instance of an article.
+
+The articles upload endpoint accepts the MultiPart-Form MIME type. The document name, relevant heading, subheading, and raw binary data are expected as part of the payload. The api generates a unique BSON ObjectId for the document and adds it alongside the raw binary data to the MongoLabs database. Afterwards, the api generates a cypher query that adds the article; including the filename and ObjectId, to the GraphStory Neo4j database.
+
+An example of one of these queries is as follows:
+```cypher
+Match (E {name:"Strategic Focus"})-[SubElement]->(H {name:"Entry"}) 
+Create (A :Article{name:"stuff.pdf", mongoId: "..."}), H-[:RELEVANT]->A;
+```
+
+####Get  | Article download.
+GET http://medtech-api.herokuapp.com/articles/[id]
+
+The api uses the id passed as a path parameter to query the MongoLabs database, and returns the file. 
 
 ### Benchmark Endpoints
-- POST http:/medtech.ie/api/articles/recommend | Post the score and the section. Returns array of articles. 
+- POST http:/medtech.ie/api/articles/recommend | Post the Section and the level of competency. Returns an array of articles. 
+
+**HTTP POST Request Example**
+```http
+[
+  {
+    "heading" : "Strategic Focus",
+    "subHeading" : "Entry"
+  }
+]
+```
+
+The medtech client submits the current section and level of competency being benchmarked to the api, the api will in return generate a cypher query and execute it on the GraphStory Neo4j database. The database will return an array of articles composed of ObjectIds and filenames, which will be displayed by the medtech client as suggested reading. The user need only click the filename to start the file download.
+
+```cypher
+MATCH (H {name:"Strategic Focus"})-[:SubElement]-(S {name:"Entry"})-[:RELEVANT]->(A :Article) 
+RETUERN A;
+```
+
+
+#Planned Endpoints
 
 ### Moderator Endpoints
 - GET http:/medtech.ie/api/articles/ | Collection of all articles.
+- GET ... | Collection of low rated or flagged articles
 
 ### Administrator Endpoints
-We getting dem all bitches
-
-### Questions
-- What are the expected document types for the articles: list plz
-- What is the name of the website?
+- POST ... | New user
+- POST ... | Delete user
+- POST ... | Set user role
 
 ### Design Brainmap
-- Homepage: 
-  - login
-  - blulb
-  - search
-  - new articles
-  - best articles
-  - catagories
-  - footer 
-
-### Ideas for next year
-- Web page generation that contains the articles (user retention on medtech.ie).
-- Are we recommending on a purely QA basis or also on a field basis. (e.g, alzheimers, neurosurgory) 
-- Can we have some docs to work off plz?
+  - Login (Multiple user roles)
+  - Search Repository based on document content (eg: Wordclouds, Moderator tagging,..)
+  - New Articles (attach upload date to neo4j nodes)
+  - Best Articles (based on number of downloads or rating system)
+  - Categories (Wordclouds, Moderator tagging,..)
