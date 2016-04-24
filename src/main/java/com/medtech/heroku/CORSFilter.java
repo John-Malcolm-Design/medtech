@@ -6,6 +6,8 @@ import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.ext.Provider;
 
+//Provides Cross Origin Resource Sharing headers to the HTTP response
+
 @Provider
 public class CORSFilter implements ContainerResponseFilter {
 

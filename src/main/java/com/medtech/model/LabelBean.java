@@ -1,5 +1,7 @@
 package com.medtech.model;
 
+//A bean used for JSON conversion
+
 public class LabelBean {
 	private String heading;
 	private String subHeading;

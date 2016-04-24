@@ -8,15 +8,20 @@ import java.util.Set;
 import org.apache.poi.util.IOUtils;
 import org.bson.types.ObjectId;
 
+//Represents the Articles
+
 public class Article {
 	
-	private ObjectId id;//probably needs to change data type according to mongo
+	private ObjectId id;
 	private String fileName;
 	private byte[] data = null;
-	private Map<String, Integer> wordMap;
 	private Set<String> labels;
 
-	//private created;
+	//Additional potential properties
+	//private ??? creationDate;
+	//private Map<String, Integer> wordMap;
+	//private string Uploader
+	//private int Downloads //store the downloads solely on Neo4j?
 	
 	public Article()
 	{
@@ -39,13 +44,13 @@ public class Article {
 		this.data = data;
 	}
 
-	public Map<String, Integer> getWordMap() {
-		return wordMap;
-	}
-
-	public void setWordMap(Map<String, Integer> wordMap) {
-		this.wordMap = wordMap;
-	}
+//	public Map<String, Integer> getWordMap() {
+//		return wordMap;
+//	}
+//
+//	public void setWordMap(Map<String, Integer> wordMap) {
+//		this.wordMap = wordMap;
+//	}
 
 	public void addLabel(String s) {
 		labels.add(s);

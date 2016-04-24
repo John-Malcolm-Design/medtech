@@ -14,6 +14,7 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 @ApplicationPath("/")
 public class Medtech extends ResourceConfig {
 	public Medtech() {
+		//All classes needed by the endpoints are to be included here
 		super(MultiPartFeature.class, ArticleResource.class, BenchmarkResource.class, Database.class, CORSFilter.class);
 	}
 }
