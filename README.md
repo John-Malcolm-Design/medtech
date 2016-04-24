@@ -3,7 +3,7 @@
 ## Overview
 The Product Development Benchmark Model has been developed by the IMDA IRDG Working Group as an assessment tool to allow organisations to benchmark themselves against best practice models in Medtech product development. 
 
-This repo contains the Java RESTfull api code that communicates with the front end and our graph and object databases.
+This repo contains the Java REST Web Service code that communicates with the AngularJS front end.
 
 ## Technologies
 - **Java:** Rbust object orientated Language. 
@@ -99,4 +99,4 @@ RETUERN A;
   - Categories (Wordclouds, Moderator tagging,..)
 
 ## Issues
-- **Travis CI**: Building continuous integration in from the start helps us to detect bugs early and write well coverered code. There was several issues with getting this working intiially mostly involving Mavens ability to build the project correctly and find all the necessary project dependencies. The JDBC driver for Neo4J was particularly problematic. These errors helped us better understand both Travis CI & Mavens archetype system.
+- **Travis CI, Maven & Neo4J**: Building continuous integration in from the start helps us to detect bugs early and write well coverered code. There was several issues with getting this working intiially mostly involving Mavens ability to build the project correctly and find all the necessary project dependencies. The JDBC driver for Neo4J was particularly problematic. These errors helped us better understand both Travis CI & Mavens archetype system.
