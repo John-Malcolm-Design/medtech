@@ -8,7 +8,7 @@ This repo contains the Java REST Web Service code that communicates with the Ang
 MEDTech API URL: https://medtech.herokuapp.com/[endpoint]
 
 ## Technologies
-- **Java:** Rbust object orientated Language. 
+- **Java:** Robust object orientated Language. 
 - **Jersey:** Java JAX-RS Implementation and RESTful Web Services framework.
 - **Neo4J:** Graph database used for fast application level queries and article reccomendations.
 - **MongoDB:** Object database used to store all documents in the Medtech repo.
@@ -24,19 +24,29 @@ This diagram gives a high level overview of both medtech client and medtech api.
 ![alt text][system-architecture]
 [system-architecture]: http://johnmalcolmdesign.com/system-architecture.png "System Architecture Diagram"
 
+
+##  Main Files & Folders
+| File/ Folder    | Description   | 
+| :------------- |:-------------| 
+| Medtech.java | Configuration class for the application |  
+| ArticleResouce.java | Defines the Articles endpoints | 
+| Article.java | Represents articles in the application | 
+| Database.java | Provides connections to MongoLabs and GraphStory databases |  
+| pom.xml | Maintains Maven dependencies and manually defined repositories | 
+
 ## Running Application
-Clone or manullay download the repo. This is a private repo so you will need to be a collaborator to do this.
+Clone or manually download the repo. This is a private repo so you will need to be a collaborator to do this.
 ```bash
 $ git clone https://github.com/johnmalcolm/medtech 
 ```
 
-Import the project into your Java IDE we reccomend eclipse. For running the project locally you will need a servlet contianer, for that we reccommend Tomcat.
+Import the project into your Java IDE, we recommend Eclipse. For running the project locally you will need a servlet contianer, for that we recommend Tomcat.
 
 When running project choose "run on server" and select Tomcat V7.0 or later. 
 
 ![alt text][eclipse-one] ![alt text][eclipse-two]
 [eclipse-one]: http://johnmalcolmdesign.com/eclipse_one.png "Run on Server"
-[eclipse-two]: http://johnmalcolmdesign.com/eclipse_to.png "Tomcat Config"
+[eclipse-two]: http://johnmalcolmdesign.com/eclipse.png "Tomcat Config"
 
 ##Role Types
 ###Each role inherits the privileges of the roles above it.
@@ -63,7 +73,7 @@ When running project choose "run on server" and select Tomcat V7.0 or later.
 ]
 ```
 
-The articles upload endpoint accepts the MultiPart-Form MIME type. The document name, relevant heading, subheading, and raw binary data are expected as part of the payload. The api generates a unique BSON ObjectId for the document and adds it alongside the raw binary data to the MongoLabs database. Afterwards, the api generates a cypher query that adds the article; including the filename and ObjectId, to the GraphStory Neo4j database.
+The articles upload endpoint accepts the MultiPart-Form MIME type. The document name, relevant heading, subheading, and raw binary data are expected as part of the payload. The api generates a unique BSON ObjectId for the document and adds it alongside the raw binary data to the MongoLabs database. Afterwards, the api generates a cypher query that adds the article node; including the filename and ObjectId, to the GraphStory Neo4j database.
 
 An example of one of these queries is as follows:
 ```cypher
@@ -110,9 +120,9 @@ RETUERN A;
 ### Design Brainmap
   - Login (Multiple user roles)
   - Search Repository based on document content (eg: Wordclouds, Moderator tagging,..)
-  - New Articles (attach upload date to neo4j nodes)
+  - New Articles (attach upload date to Neo4j nodes)
   - Best Articles (based on number of downloads or rating system)
   - Categories (Wordclouds, Moderator tagging,..)
 
 ## Issues
-- **Travis CI, Maven & Neo4J**: Building continuous integration in from the start helps us to detect bugs early and write well coverered code. There was several issues with getting this working intiially mostly involving Mavens ability to build the project correctly and find all the necessary project dependencies. The JDBC driver for Neo4J was particularly problematic. These errors helped us better understand both Travis CI & Mavens archetype system.
+- **Travis CI, Maven & Neo4J**: Building continuous integration in from the start helps us to detect bugs early and write well coverered code. There were several issues with getting this working initially, mostly involving Maven's ability to build the project correctly and find all the necessary project dependencies. The JDBC driver for Neo4J was particularly problematic, as the artifact is not currently maintained on the central Maven repository. Additionally, documentation on the Neo4j JDBC drivers is not particularily well maintained, and can often conflict with other sources or provide outdated information. For example, the GraphStory connection string that is provided by the service via an environment variable contains the standard HTTP prefix, which causes the JDBC drivers to incorrectly parse the string (issue described [here](https://github.com/neo4j-contrib/neo4j-jdbc/issues/43])). These errors helped us better understand both Travis CI & Mavens archetype system.
