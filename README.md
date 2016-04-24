@@ -30,9 +30,11 @@ Clone or manullay download the repo. This is a private repo so you will need to 
 $ git clone https://github.com/johnmalcolm/medtech 
 ```
 
-Import the project into your Java IDE. For running the project locally you will need a servlet contianer. We reccomend Tomcat.
+Import the project into your Java IDE we reccomend eclipse. For running the project locally you will need a servlet contianer, for that we reccommend Tomcat.
 
-Once installed add the medtech project to the server. Running the maven project will download all required project dependencies.
+When running project choose "run on server" and select Tomcat V7.0 or later. 
+
+
 
 ##Role Types
 ###Each role inherits the privileges of the roles above it.
