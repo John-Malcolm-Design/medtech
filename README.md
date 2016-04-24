@@ -12,7 +12,7 @@ MEDTech API URL: https://medtech.herokuapp.com/[endpoint]
 - **Jersey:** Java JAX-RS Implementation and RESTful Web Services framework.
 - **Neo4J:** Graph database used for fast application level queries and article reccomendations.
 - **MongoDB:** Object database used to store all documents in the Medtech repo.
-- **Apache Maven:** Build & Project Management tool.
+- **Maven:** Build & Project Management tool.
 - **Travis:** Continuous Integration Platform. All tests will be run here before deployment.
 - **Git:** Version Control System. 
 - **Jetty:** Production servlet container. Lightweight and easy to configure.
