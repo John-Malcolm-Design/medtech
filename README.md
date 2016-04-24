@@ -1,9 +1,11 @@
-# MEDTech [![Build Status](https://travis-ci.com/johnmalcolm/medtech.svg?token=qM1R4xpKEnps8JFk5BZp&branch=master)](https://travis-ci.com/johnmalcolm/medtech)
+# MEDTech API [![Build Status](https://travis-ci.com/johnmalcolm/medtech.svg?token=qM1R4xpKEnps8JFk5BZp&branch=master)](https://travis-ci.com/johnmalcolm/medtech)
 
 ## Overview
 The Product Development Benchmark Model has been developed by the IMDA IRDG Working Group as an assessment tool to allow organisations to benchmark themselves against best practice models in Medtech product development. 
 
 This repo contains the Java REST Web Service code that communicates with the AngularJS front end.
+
+MEDTech API URL: https://medtech.herokuapp.com/[endpoint]
 
 ## Technologies
 - **Java:** Rbust object orientated Language. 
@@ -21,6 +23,16 @@ This diagram gives a high level overview of both medtech client and medtech api.
 
 ![alt text][system-architecture]
 [system-architecture]: http://johnmalcolmdesign.com/system-architecture.png "System Architecture Diagram"
+
+## Running Application
+Clone or manullay download the repo. This is a private repo so you will need to be a collaborator to do this.
+```bash
+$ git clone https://github.com/johnmalcolm/medtech 
+```
+
+Import the project into your Java IDE. For running the project locally you will need a servlet contianer. We reccomend Tomcat.
+
+Once installed add the medtech project to the server. Running the maven project will download all required project dependencies.
 
 ##Role Types
 ###Each role inherits the privileges of the roles above it.
