@@ -3,6 +3,14 @@
 ## Overview
 The Product Development Benchmark Model has been developed by the IMDA IRDG Working Group as an assessment tool to allow organisations to benchmark themselves against best practice models in Medtech product development. 
 
+This repo contains the Java RESTfull api code that communicates with the front end and our graph and object databases.
+
+## System Architecture Diagram
+This diagram gives a high level overview of both medtech client and medtech api.
+
+![alt text][system-architecture]
+[system-architecture]: http://johnmalcolmdesign.com/system-architecture.png "System Architecture Diagram"
+
 ##Potential Role Types
 ###Each role inherits the privileges of the roles above it.
 - Benchmark: User doing the benchark.
