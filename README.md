@@ -5,18 +5,29 @@ The Product Development Benchmark Model has been developed by the IMDA IRDG Work
 
 This repo contains the Java RESTfull api code that communicates with the front end and our graph and object databases.
 
+## Technologies
+- **Java:** Rbust object orientated Language. 
+- **Jersey:** Java JAX-RS Implementation and RESTful Web Services framework.
+- **Neo4J:** Graph database used for fast application level queries and article reccomendations.
+- **MongoDB:** Object database used to store all documents in the Medtech repo.
+- **Apache Maven:** Build & Project Management tool.
+- **Travis:** Continuous Integration Platform. All tests will be run here before deployment.
+- **Git:** Version Control System. 
+- **Jetty:** Production servlet container. Lightweight and easy to configure.
+- **Heroku:** Platform as a service. Scalable PaaS where the application sits.
+
 ## System Architecture Diagram
 This diagram gives a high level overview of both medtech client and medtech api.
 
 ![alt text][system-architecture]
 [system-architecture]: http://johnmalcolmdesign.com/system-architecture.png "System Architecture Diagram"
 
-##Potential Role Types
+##Role Types
 ###Each role inherits the privileges of the roles above it.
-- Benchmark: User doing the benchark.
+- Benchmark: User taking the benchark assesment and finding articles in the repo.
 - Contributor: Uploads documents to the repository.
 - Moderator: Manages document submissions.
-- Administrator: Manages users.
+- Administrator: Manages users. Potential application wide analytics. 
 
 #Currently Implemented Endpoints
 
@@ -69,8 +80,7 @@ MATCH (H {name:"Strategic Focus"})-[:SubElement]-(S {name:"Entry"})-[:RELEVANT]-
 RETUERN A;
 ```
 
-
-#Planned Endpoints
+## Planned Endpoints
 
 ### Moderator Endpoints
 - GET http:/medtech.ie/api/articles/ | Collection of all articles.
@@ -87,3 +97,6 @@ RETUERN A;
   - New Articles (attach upload date to neo4j nodes)
   - Best Articles (based on number of downloads or rating system)
   - Categories (Wordclouds, Moderator tagging,..)
+
+## Issues
+- **Travis CI**: Building continuous integration in from the start helps us to detect bugs early and write well coverered code. There was several issues with getting this working intiially mostly involving Mavens ability to build the project correctly and find all the necessary project dependencies. The JDBC driver for Neo4J was particularly problematic. These errors helped us better understand both Travis CI & Mavens archetype system.
