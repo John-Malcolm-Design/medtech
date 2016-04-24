@@ -45,7 +45,7 @@ When running project choose "run on server" and select Tomcat V7.0 or later.
 - Moderator: Manages document submissions.
 - Administrator: Manages users. Potential application wide analytics. 
 
-#Currently Implemented Endpoints
+## Currently Implemented Endpoints
 
 ### Contributor Endpoints
 ####POST  | Article upload.
