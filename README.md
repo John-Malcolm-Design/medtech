@@ -34,7 +34,9 @@ Import the project into your Java IDE we reccomend eclipse. For running the proj
 
 When running project choose "run on server" and select Tomcat V7.0 or later. 
 
-
+![alt text][eclipse-one] ![alt text][eclipse-two]
+[eclipse-one]: http://johnmalcolmdesign.com/eclipse_one.png "Run on Server"
+[eclipse-two]: http://johnmalcolmdesign.com/eclipse_two.png "Tomcat Config"
 
 ##Role Types
 ###Each role inherits the privileges of the roles above it.
