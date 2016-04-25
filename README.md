@@ -122,7 +122,15 @@ RETUERN A;
   - Search Repository based on document content (eg: Wordclouds, Moderator tagging,..)
   - New Articles (attach upload date to Neo4j nodes)
   - Best Articles (based on number of downloads or rating system)
-  - Categories (Wordclouds, Moderator tagging,..)
+  - Categories (Wordclouds, Moderator tagging..)
 
 ## Issues
 - **Travis CI, Maven & Neo4J**: Building continuous integration in from the start helps us to detect bugs early and write well coverered code. There were several issues with getting this working initially, mostly involving Maven's ability to build the project correctly and find all the necessary project dependencies. The JDBC driver for Neo4J was particularly problematic, as the artifact is not currently maintained on the central Maven repository. Additionally, documentation on the Neo4j JDBC drivers is not particularily well maintained, and can often conflict with other sources or provide outdated information. For example, the GraphStory connection string that is provided by the service via an environment variable contains the standard HTTP prefix, which causes the JDBC drivers to incorrectly parse the string (issue described [here](https://github.com/neo4j-contrib/neo4j-jdbc/issues/43])). These errors helped us better understand both Travis CI & Mavens archetype system.
+
+## Research
+
+1. [Jersey Documentation](https://jersey.java.net/documentation/latest/index.html)
+2. [MongoDB Driver Documentation](http://mongodb.github.io/mongo-java-driver/)
+3. [Neo4J JDBC Driver Repository](https://github.com/neo4j-contrib/neo4j-jdbc)
+4. [Apache POI Documentation](http://poi.apache.org/apidocs/index.html)
+5. [Heroku Java Decumentation](https://devcenter.heroku.com/articles/getting-started-with-java#introduction)
