@@ -34,6 +34,10 @@ This diagram gives a high level overview of both medtech client and medtech api.
 | Database.java | Provides connections to MongoLabs and GraphStory databases |  
 | pom.xml | Maintains Maven dependencies and manually defined repositories | 
 
+
+![alt text][package-overview]
+[package-overview]: http://johnmalcolmdesign.com/package-overview.png "Package Overview Diagram"
+
 ## Running Application
 Clone or manually download the repo. This is a private repo so you will need to be a collaborator to do this.
 ```bash
